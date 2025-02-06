@@ -11,7 +11,6 @@ import time
 from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from pyrogram.errors import *
 from bot import Bot
 from config import (
     ADMINS,
@@ -28,23 +27,10 @@ from config import (
     OWNER_ID,
     START_PIC,
     FORCE_PIC,
-    AUTH_CHANNEL,
 )
 from helper_func import subscribed, encode, decode, get_messages, get_shortlink, get_verify_status, update_verify_status, get_exp_time
 from database.database import add_user, del_user, full_userbase, present_user
 from shortzy import Shortzy
-
-async def is_subscribed(bot, query, channel):
-    btn = []
-    for id in channel:
-        chat = await bot.get_chat(int(id))
-        try:
-            await bot.get_chat_member(id, query.from_user.id)
-        except UserNotParticipant:
-            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)])
-        except Exception as e:
-            pass
-    return btn
 
 # Logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -53,19 +39,6 @@ logger = logging.getLogger(__name__)
 
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
-    if AUTH_CHANNEL:
-        try:
-            btn = await is_subscribed(client, message, AUTH_CHANNEL)
-            if btn:
-                username = (await client.get_me()).username
-                if message.command[1]:
-                    btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1]}")])
-                else:
-                    btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
-                await message.reply_text(text=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on try again button. 😇</b>", reply_markup=InlineKeyboardMarkup(btn))
-                return
-        except Exception as e:
-            print(e)
     id = message.from_user.id
     owner_id = ADMINS  # Fetch the owner's ID from config
 
