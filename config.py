@@ -26,6 +26,8 @@ PORT = os.environ.get("PORT", "8585")
 DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://ultroidxTeam:ultroidxTeam@cluster0.gabxs6m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DB_NAME = os.environ.get("DATABASE_NAME", "Cluster0")
 
+START_PIC = os.environ.get("START_PIC", "https://graph.org/file/7ccfac5ffb9ec6feef701-3e45df20e74a8e43a3.jpg")
+FORCE_PIC = os.environ.get("FORCE_PIC", "https://graph.org/file/608d3fbbda4c219debdc2-8b78a684319f8c5cfd.jpg")
 #Shortner (token system) 
 # check my discription to help by using my refer link of shareus.io
 # 
