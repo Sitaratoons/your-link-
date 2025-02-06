@@ -142,7 +142,7 @@ async def start_command(client: Client, message: Message):
                 ]
                 ]
             )
-        await message.reply_photo(
+            await message.reply_photo(
             photo=START_PIC,
             caption=START_MSG.format(
                 first=message.from_user.first_name,
@@ -154,7 +154,7 @@ async def start_command(client: Client, message: Message):
             reply_markup=reply_markup#,
             #message_effect_id=5104841245755180586  # 🔥
         )
-        return
+
         else:
             verify_status = await get_verify_status(id)
             if IS_VERIFY and not verify_status['is_verified']:
